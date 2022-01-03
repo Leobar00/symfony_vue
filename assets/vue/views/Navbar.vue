@@ -1,0 +1,71 @@
+<template>
+  <div>
+      <nav>
+        <ul class="navbar-flex">
+            <li>
+                <div class="glass-effect flex-center square">
+                    <a href="#" class="flex-center "><i class="fas fa-th white-color fa-lg"></i></a>
+                </div>
+            </li>
+            <li>
+                <div class="glass-effect flex-center square">
+                    <a href="#" class="flex-center "><i class="fas fa-home white-color fa-lg"></i></a>
+                    
+                </div>
+            </li>
+            <li>
+                <div class="glass-effect flex-center height-icon">
+                    <input type="text">
+                    <i class="fas fa-search white-color fa-lg"></i>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-flex" style="justify-content:center">
+            <li>
+                <h1 class="white-color title">Trello</h1>
+            </li>
+        </ul>
+        <ul class="navbar-flex" style="justify-content:flex-end">
+            <li>
+                <div class="glass-effect flex-center square">
+                    <a href="#" class="flex-center "><i class="fas fa-plus white-color fa-lg"></i></a>
+                </div>
+            </li>
+            <li>
+                <div class="glass-effect flex-center square">
+                    <a href="#" class="flex-center "><i class="fas fa-info white-color fa-lg"></i></a>
+                </div>
+            </li>
+            <li>
+                <div class="glass-effect flex-center square">
+                    <a href="#" class="flex-center "><i class="fas fa-bell white-color fa-lg"></i></a>
+                    
+                </div>
+            </li>
+            <li>
+                <div class="glass-effect flex-center square circle">
+                    <a href="#" class="flex-center "></a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import Home from './Home.vue'
+export default {
+    name:'Navbar',
+    components:{
+        Home
+    },
+    methods:{
+        
+    }
+}
+</script>
+
+<style>
+
+</style>

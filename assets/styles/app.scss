@@ -1,0 +1,216 @@
+@import '~bootstrap/scss/bootstrap';
+body{
+    font-size: 1rem;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+  }
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    text-decoration: none;
+    color: unset;
+}
+
+//navbar style
+nav {
+    width: 100%;
+    display: flex;
+    height: 70px;
+    background-color: rgb(163, 0, 204);
+    justify-content: space-between;
+    .navbar-flex{
+        display: flex;
+        height: 100%;
+        width: 33%;
+        align-items: center;
+        li{
+            list-style: none;
+
+            .square{
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 0.3rem;
+            }
+
+            .circle{
+                border-radius: 50%;
+            }
+            
+            .height-icon{
+                height: 2.5rem;
+                border-radius: 0.8rem;
+                input{
+                    background-color: rgba(235, 236, 240, 0);
+                    border: none;
+                    caret-color: white;
+                    color: white;
+                    padding-left:0.4rem;
+                }
+                i{
+                    padding: 0.5rem;
+                }
+            }
+            .title{
+                font-weight: 700;
+            }
+        }
+    }
+    
+}
+
+.glass-effect {
+    background-color: rgb(235, 236, 240,0.7);
+    margin: 0.5rem;
+    user-select: none;
+    &:hover{
+        cursor: pointer;
+        background-color: rgb(235, 236, 240,0.4);
+
+    }
+} 
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.white-color{
+    color: white;
+}
+
+//Main scene
+main{
+    width: 100%;
+    height: 100vh;
+    background-color:gray ;
+    .column-trello{
+        margin:0 2rem ;
+        max-height:90vh ;
+        overflow-y: auto;
+        width: 280px;
+        background-color: #ebecf0;
+        border-top-right-radius: 0.3rem;
+        border-top-left-radius: 0.3rem;
+        .title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .text-column{
+                padding: 1rem;
+            }
+            .icon-column{
+                padding: 1rem;
+                color: rgb(150, 150, 150);
+            }
+        }
+        div[class^='cards']{
+            cursor: pointer;
+            margin: 1rem auto;
+            padding: 1rem 0;
+            width: 95%;
+            background-color: white;
+            border-radius: 0.6rem;
+            .titles-card {
+                color: black;
+                padding: 0.3rem;
+                user-select: none;
+            }
+            .footer-card{
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom:0.7rem;
+                margin-right: 0.7rem;
+                .circle-people-card{
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border-radius: 50%;
+                    background-color:rgb(204, 204, 204) ;
+                }
+            }
+        }
+    }
+    .footer-column{
+        margin:0 2rem ;
+        width: 280px;
+        background-color: #ebecf0;
+        border-bottom-left-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+        display: flex;
+        .add-card{
+            margin-top: 0.5rem;
+            padding:0 1.2rem;
+            background-color: rgb(235, 236, 240,0.7);
+            &:hover{
+                opacity: 0.8; 
+            }
+            a{
+                display: flex;
+                p{
+                    color: grey;
+                }
+                i{
+                    color:grey;
+                    padding-right: 0.8rem; 
+                }
+            }
+            
+        }
+    }
+}
+
+//modale
+
+.modal-new-card{
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .form-card{
+
+        display: flex;
+        flex-direction: column;
+        background-color: lightgray;
+    }
+}
+.modal-info-card{
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    .close-button{
+        position: absolute;
+        right: 0.3rem;
+        top: 0.3rem;
+    }
+}
+.d-none{
+    display: none;
+}
