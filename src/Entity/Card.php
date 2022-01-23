@@ -32,6 +32,13 @@ class Card
      */
     private $media;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Colonna::class, inversedBy="card")
+     */
+    private $colonna;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +79,18 @@ class Card
 
         return $this;
     }
+
+    public function getColonna(): ?Colonna
+    {
+        return $this->colonna;
+    }
+
+    public function setColonna(?Colonna $colonna): self
+    {
+        $this->colonna = $colonna;
+
+        return $this;
+    }
+
+    
 }

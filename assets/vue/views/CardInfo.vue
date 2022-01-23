@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="d-none modal-info-card  " :data-id="idInfo">
-        <div class="close-button" >
+        <div class="close-button" @click="dNone()" >
             <i class="far fa-times-circle "></i>
         </div>
         <div class="titles-card"> 
@@ -11,10 +11,9 @@
             <textarea name="description-info" id="" cols="30" rows="10" v-model="descriptionCard"></textarea>
         </div>
         <input type="text" name="id" class="d-none">
-        <button type="submit">Aggiorna</button>
+        <slot name="update"></slot>
         
-        
-        <button type="submit"> Delete</button>
+        <slot name="delete"></slot>
     </div>
 </div>
     
@@ -22,17 +21,22 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'CardInfo',
-    data:{},
-    props:{
-        idInfo: Number,
-        titleCard: String,
-        descriptionCard: String
+    data:{
+        uri : 'http://localhost:8000',
+    },
+    props:['descriptionCard','titleCard','idInfo'],
+    methods:{
+        dNone:function(){
+            document.querySelector('.modal-info-card').classList.add('d-none')
+            document.querySelector('.new-card .modal-info-card').classList.add('d-none')
+        },
+
     }
 }
 </script>
-
-<style>
+<style lang="less" scoped>
 
 </style>

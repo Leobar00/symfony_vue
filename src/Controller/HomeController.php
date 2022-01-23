@@ -13,6 +13,12 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Colonna;
+use Doctrine\ORM\Mapping\Column;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
+
+
 
 class HomeController extends AbstractController
 {
@@ -68,32 +74,35 @@ class HomeController extends AbstractController
 
 
     /**
-     * @Route("/create", name="create")
+     * @Route("/ajax/create", name="create")
      */
     public function create(EntityManagerInterface $entityManager,Request $request): Response
     {
         if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
-            $title = $request->request->get('title');
-            $description = $request->request->get('description');
-
+            $data = $request->getContent();
+            $data = json_decode($data, true);
+            
+            $title = $data['title'];
+            $description = $data['description'];
+            $idColumn = $data['idColumn'];
+             
+            $column = $entityManager->getRepository(Colonna::class)->find($idColumn);
 
             $card = new Card();
             $card->setTitle($title)
-                ->setDescription($description);
-        
+                ->setDescription($description)
+                ->setColonna($column);
 
-            if(!is_null($title)){
-                $entityManager->persist($card);
-                $entityManager->flush();
-            }
-
-            $id = $card->getId();
+           
+            $entityManager->persist($card);
+            $entityManager->flush();
+            
 
             $jsonData = array(
-                'id'    => $id,
-                'title' => $title,
-                'description' => $description
+                'status'   => 'success',
+                'column-id'=> json_encode($idColumn)
             );
+            
             return new Response(json_encode($jsonData)); 
         }
 
@@ -111,26 +120,39 @@ class HomeController extends AbstractController
     /**
      * @Route("/ajax/field-info", name="ajax_field")
      */
-    public function allFields(EntityManagerInterface $entityManager){
+    public function allFields(EntityManagerInterface $entityManager,SerializerInterface $serializer){
 
         $card = $entityManager->getRepository(Card::class)->findAll();
-    
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
-        JsonEncoder()));
-        $json = $serializer->serialize($card, 'json');
-        $response = json_decode($json);
-        
 
-        return $this->json($response);
+        $encoders = [new JsonEncoder()]; // If no need for XmlEncoder
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        // Serialize your object in Json
+        $jsonObject = $serializer->serialize($card, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+
+        return $this->json(json_decode($jsonObject));
 
 
     }
 
+    /**
+     * @Route("/ajax/update-card", name="ajax_update")
+     */
     public function updateCard(EntityManagerInterface $entityManager,Request $request){
-        if ($request->isXmlHttpRequest() || $request->isMethod('put')) { 
-            $id = $request->request->get('id');
-            $title = $request->request->get('title-info');
-            $description = $request->request->get('description-info');
+        if ($request->isXmlHttpRequest() || $request->isMethod('post')) { 
+            
+            $data = $request->getContent();
+            $data = json_decode($data, true);
+
+            $id = $data['id'];
+            $title = $data['titleInfo'];
+            $description = $data['descriptionInfo'];
+
             
             $card = $entityManager->getRepository(Card::class)->find($id);
 
@@ -146,18 +168,26 @@ class HomeController extends AbstractController
             $jsonData = array(
                 'status' => 'success'
             );
-            return new JsonResponse($jsonData); 
+            return new Response(json_encode($jsonData)); 
         }
+        $jsonData = array(
+            'status' => 'error'
+        );
+
+        return new Response(json_encode($jsonData));
 
     }
 
     /**
-     * @Route("/delete", name="delete")
+     * @Route("/ajax/delete", name="delete")
      */
     public function deleteAction(EntityManagerInterface $entityManager,Request $request){
-        if ($request->isXmlHttpRequest() || $request->isMethod('delete')) {
+        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
 
-            $id = $request->request->get('id');
+            $data = $request->getContent();
+            $data = json_decode($data, true);
+
+            $id = $data['id'];
             $card = $entityManager->getRepository(Card::class)->find($id);
 
             $entityManager->remove($card);
@@ -176,6 +206,7 @@ class HomeController extends AbstractController
         return new Response(json_encode($jsonData));
 
     }
+    
 
 
     private function sendResponse($success,$type){

@@ -28,8 +28,4 @@ new Vue({
   components: { App },
   template: "<App/>",
   router,
-  //compilerOptions: {
-    //delimiters: ['${', '}'],
-    //comments: true
-  //}
 });

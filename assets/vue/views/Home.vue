@@ -1,43 +1,38 @@
 <template>
-<div>
+<div >
     <main>
-        <div class="column-trello">
+        <div class="column-trello" >
             <div class="top-column">
 
-                    <div class="title">
-                        <span class="text-column">
-                            <strong>Da fare</strong>
-                        </span>
-                        <span class="icon-column">
-                            <a href="#" class="flex-center "><i class="fas fa-ellipsis-h"></i></a>
-                        </span>
-                    </div>
+                <div class="title">
+                    <span class="text-column">
+                        <strong>{{ columnName }}</strong>
+                    </span>
+                    <span class="icon-column">
+                        <a href="#" class="flex-center "><i class="fas fa-ellipsis-h"></i></a>
+                    </span>
+                </div>
                         
-                    <Card ></Card>
+                <Card :idColonna="idColumn" ></Card>
                     
-                </div>
             </div>
-            <div class="bottom-column">
-                <div class="footer-column">
-                    <div class="add-card" >
-                        <a href="#">
-                            <i class="fas fa-plus white-color "></i>
-                            <p>Add a card</p>
-                        </a>
-                    </div>
-                </div>
-            </div>    
+        </div>
+            <AddCard :colonna="idColumn"></AddCard>   
     </main>  
 </div>
 </template>
 
 <script>
 import Card from './Card.vue'
+import AddCard from './AddCard.vue'
 export default {
   name: "Home",
   components:{
-      Card
-  }
+      Card,
+      AddCard
+  },
+  props:['columnName','idColumn'],
+
   
 };
 </script>

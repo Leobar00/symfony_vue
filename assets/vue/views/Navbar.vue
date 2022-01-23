@@ -49,16 +49,14 @@
             </li>
         </ul>
     </nav>
-    <Home></Home>
   </div>
 </template>
 
 <script>
-import Home from './Home.vue'
 export default {
     name:'Navbar',
     components:{
-        Home
+        
     },
     methods:{
         
