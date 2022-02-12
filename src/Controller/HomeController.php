@@ -186,7 +186,7 @@ class HomeController extends AbstractController
 
             $data = $request->getContent();
             $data = json_decode($data, true);
-
+            
             $id = $data['id'];
             $card = $entityManager->getRepository(Card::class)->find($id);
 

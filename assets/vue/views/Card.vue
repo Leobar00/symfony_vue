@@ -46,58 +46,58 @@ export default {
     }
   },
   methods:{
-      infoCard: function(clickedId){
-          let url = "/ajax/field-info"
-          axios.get(url).then((msg) => {
-            for(let key in msg.data){
-                if(key == clickedId){
-                    this.info = msg.data[key]
-                }
-            }
-          });  
-          document.querySelector('.modal-info-card').classList.remove('d-none')
-      },
-      allCards: function(){
+        infoCard: function(clickedId){
             let url = "/ajax/field-info"
             axios.get(url).then((msg) => {
-                this.res = msg.data
+                for(let key in msg.data){
+                    if(key == clickedId){
+                        this.info = msg.data[key]
+                    }
+                }
+            });  
+            document.querySelector('.modal-info-card').classList.remove('d-none')
+        },
+        allCards: function(){
+                let url = "/ajax/field-info"
+                axios.get(url).then((msg) => {
+                    this.res = msg.data
+                });
+        },
+        deleteCard: function(){
+            let url = "/ajax/delete"
+            let iD = document.querySelector('.modal-info-card ').getAttribute('data-id');
+
+            axios.post(url,{id:iD}).then((msg) => {
+                //elimino e "refresh" della lista
+                this.allCards()
+                this.dNone()
             });
-      },
-      deleteCard: function(){
-          let url = "/ajax/delete"
-          let iD = document.querySelector('.modal-info-card ').getAttribute('data-id');
-
-          axios.post(url,{id:iD}).then((msg) => {
-              //elimino e "refresh" della lista
-              this.allCards()
-              this.dNone()
-          });
-      },
-      updateCard: function(){
-          let url = "/ajax/update-card"
-          let description = document.querySelector('.description-card textarea').value;
-          let title = document.querySelector('.titles-card textarea').value;
-          let iD = document.querySelector('.modal-info-card ').getAttribute('data-id');
-
-          axios.post(url,{titleInfo:title,descriptionInfo:description,id:iD}).then((msg) => {
-              this.allCards()
-              this.dNone()
-          });
         },
-        dNone:function(){
-            document.querySelector('.modal-info-card').classList.add('d-none')
-        },
-        createCard: function(idColonna){
-          let url = "/ajax/create"
-          let description = document.querySelector('.new-card .description-card textarea').value;
-          let title = document.querySelector('.new-card .titles-card textarea').value;
+        updateCard: function(){
+            let url = "/ajax/update-card"
+            let description = document.querySelector('.description-card textarea').value;
+            let title = document.querySelector('.titles-card textarea').value;
+            let iD = document.querySelector('.modal-info-card ').getAttribute('data-id');
 
-          axios.post(url,{title:title,description:description,idColumn:idColonna}).then((msg) => {
-              //creo e "refresh" della lista
-              this.column = msg.data['column-id'];
-              this.allCards()
-              this.dNone()
-          });
+            axios.post(url,{titleInfo:title,descriptionInfo:description,id:iD}).then((msg) => {
+                this.allCards()
+                this.dNone()
+            });
+            },
+            dNone:function(){
+                document.querySelector('.modal-info-card').classList.add('d-none')
+            },
+            createCard: function(idColonna){
+            let url = "/ajax/create"
+            let description = document.querySelector('.new-card div[data-id="'+idColonna+'"] .description-card textarea').value;
+            let title = document.querySelector('.new-card div[data-id="'+idColonna+'"] .titles-card textarea').value;
+
+            axios.post(url,{title:title,description:description,idColumn:idColonna}).then((msg) => {
+                //creo e "refresh" della lista
+                this.column = msg.data['column-id'];
+                this.allCards()
+                this.dNone()
+            });
         },
   },
   mounted(){
