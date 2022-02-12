@@ -43,7 +43,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/fieldId", name="fieldId")
      */
-    public function getFieldId(EntityManagerInterface $entityManager,Request $request){
+    public function getFieldId(EntityManagerInterface $entityManager,Request $request)
+    {
         
         if ($request->isXmlHttpRequest() || $request->isMethod('get')) {
             $id = $request->request->get('id');
@@ -120,7 +121,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/ajax/field-info", name="ajax_field")
      */
-    public function allFields(EntityManagerInterface $entityManager,SerializerInterface $serializer){
+    public function allFields(EntityManagerInterface $entityManager,SerializerInterface $serializer)
+    {
 
         $card = $entityManager->getRepository(Card::class)->findAll();
 
@@ -143,7 +145,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/ajax/update-card", name="ajax_update")
      */
-    public function updateCard(EntityManagerInterface $entityManager,Request $request){
+    public function updateCard(EntityManagerInterface $entityManager,Request $request)
+    {
         if ($request->isXmlHttpRequest() || $request->isMethod('post')) { 
             
             $data = $request->getContent();
@@ -181,7 +184,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/ajax/delete", name="delete")
      */
-    public function deleteAction(EntityManagerInterface $entityManager,Request $request){
+    public function deleteAction(EntityManagerInterface $entityManager,Request $request)
+    {
         if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
 
             $data = $request->getContent();
@@ -209,7 +213,8 @@ class HomeController extends AbstractController
     
 
 
-    private function sendResponse($success,$type){
+    private function sendResponse($success,$type)
+    {
 
         $data = array(
             "success" => $success,

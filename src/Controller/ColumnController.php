@@ -62,7 +62,8 @@ class ColumnController extends AbstractController
     /**
      * @Route("/ajax/column-all", name="all_column")
      */
-    public function allFields(EntityManagerInterface $entityManager){
+    public function allFields(EntityManagerInterface $entityManager)
+    {
         
         $column   = $entityManager->getRepository(Colonna::class)->findAll();
         $encoders = [new JsonEncoder()]; // If no need for XmlEncoder
