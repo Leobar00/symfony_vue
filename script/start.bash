@@ -2,7 +2,7 @@
 echo "-- Start script --"
 echo "Start symfony server"
 
-symfony servr:start
+symfony server:start
 
 echo "Run watcher with yarn"
 
