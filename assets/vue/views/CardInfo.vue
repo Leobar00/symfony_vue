@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="d-none modal-info-card  " :data-id="idInfo">
+    <div class="d-none modal-info-card  " :data-id="idInfo" :data-column="idColumn">
         <div class="close-button" @click="dNone()" >
             <i class="far fa-times-circle "></i>
         </div>
@@ -24,14 +24,20 @@
 import axios from 'axios';
 export default {
     name: 'CardInfo',
+    
     data:{
         uri : 'http://localhost:8000',
     },
-    props:['descriptionCard','titleCard','idInfo'],
+
+    props:['descriptionCard','titleCard','idInfo','idColumn'],
+
     methods:{
+
         dNone:function(){
-            document.querySelector('.modal-info-card').classList.add('d-none')
-            document.querySelector('.new-card .modal-info-card').classList.add('d-none')
+            let list = document.querySelectorAll('.modal-info-card');
+            for (var i = 0; i < list.length; ++i) {
+                list[i].classList.add('d-none');
+            }
         },
 
     }

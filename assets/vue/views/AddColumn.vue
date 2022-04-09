@@ -1,5 +1,5 @@
 <template>
-  <div class="add-column" @click="addColumn()">
+  <div class="add-column" @click="addColumn()" @all-column="allColumn">
         <div class="container-new-column"> 
             <p><i class="fas fa-plus "></i> Add another List</p>
         </div>
@@ -18,7 +18,9 @@ export default {
             let url = "/ajax/create-column"
             axios.post(url,{name:'Da fare'}).then((msg) => {
                 
+                this.$emit('allColumn');
             });
+
         },
     },
 }

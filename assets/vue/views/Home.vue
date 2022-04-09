@@ -1,6 +1,6 @@
 <template>
 <div >
-    <main>
+    <span>
         <div class="column-trello" >
             <div class="top-column">
 
@@ -18,7 +18,7 @@
             </div>
         </div>
             <AddCard :colonna="idColumn"></AddCard>   
-    </main>  
+    </span>  
 </div>
 </template>
 
