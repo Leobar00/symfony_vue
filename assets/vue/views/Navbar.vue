@@ -15,7 +15,7 @@
             </li>
             <li>
                 <div class="glass-effect flex-center height-icon">
-                    <input type="text">
+                    <input type="text" v-model="search" @input="searchCard()">
                     <i class="fas fa-search white-color fa-lg"></i>
                 </div>
             </li>
@@ -55,6 +55,9 @@
 <script>
 export default {
     name:'Navbar',
+    data:{
+        search:'' 
+    },
     components:{
         
     },
