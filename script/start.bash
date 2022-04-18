@@ -1,10 +1,11 @@
 #!/bin/bash
-echo "-- Start script --"
-echo "Start symfony server"
+echo "-- Start script --";
 
-symfony server:start
+echo "---- Start symfony server ----";
 
-echo "Run watcher with yarn"
+symfony server:start -d
+
+echo "---- Run watcher with yarn ----";
 
 yarn encore prod --watch
 

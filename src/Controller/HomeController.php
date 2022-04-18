@@ -113,7 +113,6 @@ class HomeController extends AbstractController
 
         return new Response(json_encode($jsonData));
 
-
     }
     
 

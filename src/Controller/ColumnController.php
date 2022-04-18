@@ -54,7 +54,6 @@ class ColumnController extends AbstractController
 
         return new Response(json_encode($jsonData));
 
-
     }
     
 
@@ -78,9 +77,7 @@ class ColumnController extends AbstractController
             }
         ]);
         
-
         return $this->json(json_decode($jsonObject));
-
 
     }
 }
