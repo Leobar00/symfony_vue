@@ -64,7 +64,7 @@ export default {
             });
         },
         dNoneColumn: function (id) {
-            let element = document.querySelector('div[data-column="'+ id +'"]')
+            let element = document.querySelector('div[data-column="'+ id +'"]').parentElement
             element.remove()
         }
   }
