@@ -80,4 +80,35 @@ class ColumnController extends AbstractController
         return $this->json(json_decode($jsonObject));
 
     }
+
+    /**
+     * @Route("/ajax/column/delete", name="delete_column")
+     */
+    public function deleteAction(EntityManagerInterface $entityManager,Request $request)
+    {
+        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
+
+            $data = $request->getContent();
+            $data = json_decode($data, true);
+            
+            $id = $data['id'];
+            $column = $entityManager->getRepository(Colonna::class)->find($id);
+
+            $entityManager->remove($column);
+            $entityManager->flush();
+
+            $jsonData = array(
+                'status' => 'success'
+            );
+            return new Response(json_encode($jsonData)); 
+        }   
+
+        $jsonData = array(
+            'status' => 'error'
+        );
+
+        return new Response(json_encode($jsonData));
+
+    }
+    
 }

@@ -22,7 +22,7 @@
         </ul>
         <ul class="navbar-flex" style="justify-content:center">
             <li>
-                <h1 class="white-color title">Trello</h1>
+                <h1 class="white-color title">TrelLeo</h1>
             </li>
         </ul>
         <ul class="navbar-flex" style="justify-content:flex-end">
