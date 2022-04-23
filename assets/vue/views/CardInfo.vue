@@ -74,9 +74,11 @@ export default {
         }
     }
     .button{
-        border-radius: 0.5rem;
+        border-radius: 0.2rem;
         margin: 1rem 0.3rem;
         color: white;
+        border: none;
+        padding: 0.3rem 0;
     }
     .close-button{
         position: absolute;
@@ -86,10 +88,10 @@ export default {
         cursor: pointer;
     }
     .delete{
-        background-color: rgba(255, 0, 0, 0.616);
+        background-color: rgba(255, 0, 0, 0.658);
     }
     .update{
-        background-color: yellowgreen;
+        background-color: rgb(74, 151, 29);
     }
     .create{
         background-color: rgb(2, 170, 2);
