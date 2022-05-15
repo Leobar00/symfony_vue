@@ -46,29 +46,29 @@ class HomeController extends AbstractController
     public function getFieldId(EntityManagerInterface $entityManager,Request $request)
     {
         
-        if ($request->isXmlHttpRequest() || $request->isMethod('get')) {
-            $id = $request->request->get('id');
-            $card = $entityManager->getRepository(Card::class)->find($id);
+        if (!$request->isXmlHttpRequest() || !$request->isMethod('get')) {
 
-            $title = $card->getTitle();
-            $description = $card->getDescription();
-            
-            
             $data = array(
-                'id'            => $id,
-                'title'         => $title,
-                'description'   => $description
+                'status' => 'error'
             );
-
+    
             return new Response(json_encode($data));
         }
 
+        $id = $request->request->get('id');
+        $card = $entityManager->getRepository(Card::class)->find($id);
+
+        $title = $card->getTitle();
+        $description = $card->getDescription();
+            
+            
         $data = array(
-            'status' => 'error'
+            'id'            => $id,
+            'title'         => $title,
+            'description'   => $description
         );
 
         return new Response(json_encode($data));
-
 
     }
 
@@ -79,37 +79,40 @@ class HomeController extends AbstractController
      */
     public function create(EntityManagerInterface $entityManager,Request $request): Response
     {
-        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
-            $data = $request->getContent();
-            $data = json_decode($data, true);
+        //guard clauses
+        if (!$request->isMethod('post')) {
             
-            $title = $data['title'];
-            $description = $data['description'];
-            $idColumn = $data['idColumn'];
-             
-            $column = $entityManager->getRepository(Colonna::class)->find($idColumn);
-
-            $card = new Card();
-            $card->setTitle($title)
-                ->setDescription($description)
-                ->setColonna($column);
-
-           
-            $entityManager->persist($card);
-            $entityManager->flush();
-            
-
             $jsonData = array(
-                'status'   => 'success',
-                'column-id'=> json_encode($idColumn)
+                'status' => 'error'
             );
-            
+
             return new Response(json_encode($jsonData)); 
         }
+        
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+            
+        $title = $data['title'];
+        $description = $data['description'];
+        $idColumn = $data['idColumn'];
+             
+        $column = $entityManager->getRepository(Colonna::class)->find($idColumn);
+
+        $card = new Card();
+        $card->setTitle($title)
+            ->setDescription($description)
+            ->setColonna($column);
+
+           
+        $entityManager->persist($card);
+        $entityManager->flush();
+            
 
         $jsonData = array(
-            'status' => 'error'
+            'status'   => 'success',
+            'column-id'=> json_encode($idColumn)
         );
+            
 
         return new Response(json_encode($jsonData));
 
@@ -146,38 +149,41 @@ class HomeController extends AbstractController
      */
     public function updateCard(EntityManagerInterface $entityManager,Request $request)
     {
-        if ($request->isXmlHttpRequest() || $request->isMethod('post')) { 
+
+        if (!$request->isMethod('post')) { 
             
-            $data = $request->getContent();
-            $data = json_decode($data, true);
-
-            $id = $data['id'];
-            $title = $data['titleInfo'];
-            $description = $data['descriptionInfo'];
-
-            
-            $card = $entityManager->getRepository(Card::class)->find($id);
-
-            $card->setTitle($title)
-                ->setDescription($description);
-
-            if(!is_null($title)){
-                $entityManager->persist($card);
-                $entityManager->flush();
-            }
-
-
             $jsonData = array(
-                'status' => 'success'
+                'status' => 'error'
             );
-            return new Response(json_encode($jsonData)); 
+    
+            return new Response(json_encode($jsonData));
+        }    
+            
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+
+        $id = $data['id'];
+        $title = $data['titleInfo'];
+        $description = $data['descriptionInfo'];
+
+            
+        $card = $entityManager->getRepository(Card::class)->find($id);
+
+        $card->setTitle($title)
+            ->setDescription($description);
+
+        if(!is_null($title)){
+            $entityManager->persist($card);
+            $entityManager->flush();
         }
+
+
         $jsonData = array(
-            'status' => 'error'
+            'status' => 'success'
         );
 
-        return new Response(json_encode($jsonData));
-
+        return new Response(json_encode($jsonData)); 
+        
     }
 
     /**
@@ -185,28 +191,28 @@ class HomeController extends AbstractController
      */
     public function deleteAction(EntityManagerInterface $entityManager,Request $request)
     {
-        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
-
-            $data = $request->getContent();
-            $data = json_decode($data, true);
+        if (!$request->isMethod('post')) {
             
-            $id = $data['id'];
-            $card = $entityManager->getRepository(Card::class)->find($id);
-
-            $entityManager->remove($card);
-            $entityManager->flush();
-
             $jsonData = array(
-                'status' => 'success'
+                'status' => 'error'
             );
-            return new Response(json_encode($jsonData)); 
-        }   
+    
+            return new Response(json_encode($jsonData));
+        }
+
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+        
+        $id = $data['id'];
+        $card = $entityManager->getRepository(Card::class)->find($id);
+
+        $entityManager->remove($card);
+        $entityManager->flush();
 
         $jsonData = array(
-            'status' => 'error'
+            'status' => 'success'
         );
-
-        return new Response(json_encode($jsonData));
+        return new Response(json_encode($jsonData));  
 
     }
     

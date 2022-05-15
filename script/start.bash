@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "-- Start script --";
 
-echo "---- Start symfony server ----";
+echo "---- Start symfony server in background ----";
 
 symfony server:start -d
 

@@ -27,32 +27,36 @@ class ColumnController extends AbstractController
      */
     public function create(EntityManagerInterface $entityManager,Request $request): Response
     {
-        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
-            $data = $request->getContent();
-            $data = json_decode($data, true);
-            
-            $name = $data['name'];
-
-
-            $column = new Colonna();
-            $column->setName($name);
+        //guard clauses
+        if (!$request->isMethod('post')) {
         
-            $entityManager->persist($column);
-            $entityManager->flush();
-            
-            
             $jsonData = array(
-                'status' => 'success'
+                'status' => 'error'
             );
 
             return new Response(json_encode($jsonData)); 
         }
 
+
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+            
+        $name = $data['name'];
+
+
+        $column = new Colonna();
+        $column->setName($name);
+        
+        $entityManager->persist($column);
+        $entityManager->flush();
+            
+            
         $jsonData = array(
-            'status' => 'error'
+            'status' => 'success'
         );
 
-        return new Response(json_encode($jsonData));
+        return new Response(json_encode($jsonData)); 
+        
 
     }
     
@@ -86,28 +90,29 @@ class ColumnController extends AbstractController
      */
     public function deleteAction(EntityManagerInterface $entityManager,Request $request)
     {
-        if ($request->isXmlHttpRequest() || $request->isMethod('post')) {
-
-            $data = $request->getContent();
-            $data = json_decode($data, true);
+        if (!$request->isMethod('post')) {
             
-            $id = $data['id'];
-            $column = $entityManager->getRepository(Colonna::class)->find($id);
-
-            $entityManager->remove($column);
-            $entityManager->flush();
-
             $jsonData = array(
-                'status' => 'success'
+                'status' => 'error'
             );
-            return new Response(json_encode($jsonData)); 
-        }   
+    
+            return new Response(json_encode($jsonData));
+        } 
+
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+        
+        $id = $data['id'];
+        $column = $entityManager->getRepository(Colonna::class)->find($id);
+
+        $entityManager->remove($column);
+        $entityManager->flush();
 
         $jsonData = array(
-            'status' => 'error'
+            'status' => 'success'
         );
-
         return new Response(json_encode($jsonData));
+
 
     }
     
